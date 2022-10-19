@@ -1,0 +1,5 @@
+@hostname = 127.0.0.1
+@port = 3028
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@serviceId = ms-cli-ot

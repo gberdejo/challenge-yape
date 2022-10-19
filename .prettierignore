@@ -1,0 +1,11 @@
+# folders
+dist/
+node_modules/
+
+# rc
+.nvmrc
+
+# configs
+.eslintrc.json
+*config.json
+*config.ts
