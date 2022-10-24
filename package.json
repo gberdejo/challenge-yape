@@ -7,18 +7,21 @@
     "dev": "ts-node src/index.ts",
     "test": "jest --detectOpenHandles --forceExit --coverage --verbose",
     "lint": "npx eslint \"src/**/*.{js,ts,tsx}\"",
-    "lint:fix": "eslint \"src/**/*.{js,ts,tsx}\" --fix"
+    "lint:fix": "eslint \"src/**/*.{js,ts,tsx}\" --fix",
+    "watch": "nodemon --watch \"src/**/*.{js,ts}\" --exec ts-node src/index.ts"
   },
   "dependencies": {
-    "cors": "^2.8.5",
+    "@graphql-tools/schema": "^9.0.4",
+    "@typegoose/auto-increment": "^1.8.0",
+    "@typegoose/typegoose": "^9.12.1",
     "express": "^4.17.2",
-    "morgan": "^1.10.0"
+    "express-graphql": "^0.12.0",
+    "mongoose": "^6.6.7",
+    "nanoid": "^4.0.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.0",
-    "@types/morgan": "^1.9.3",
     "@types/node": "^17.0.14",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
