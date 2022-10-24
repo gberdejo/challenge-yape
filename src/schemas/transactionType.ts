@@ -1,5 +1,5 @@
-import { TransactionTypeInputType } from 'types/index';
-import { TransactionTypeModel } from '../models/transactionType';
+import { TransactionTypeInputType } from 'types/index'
+import * as transactionTypeService from '../services/transactionType.service'
 
 export const typeDefs = `#graphql
     extend type Query {
@@ -18,31 +18,17 @@ export const typeDefs = `#graphql
         _id: ID!
         tranferTypeId: Int!
         name: String!
+        createdAt: String
+        updatedAt: String
     }
-`;
+`
 
 export const resolvers = {
   Query: {
-    async getTransactionTypes() {
-      const listSTypes = await TransactionTypeModel.find();
-      return listSTypes;
-    },
+    getTransactionTypes: () => transactionTypeService.getTransactionTypes()
   },
   Mutation: {
-    async createTransactionType(
-      _: any,
-      { input }: { input: TransactionTypeInputType },
-    ) {
-      const transactionType = new TransactionTypeModel({
-        name: input.name,
-      });
-
-      transactionType.tranferTypeId =
-        (await TransactionTypeModel.countDocuments()) + 1;
-
-      await transactionType.save();
-
-      return transactionType;
-    },
-  },
-};
+    createTransactionType: (_: any, { input }: { input: TransactionTypeInputType }) =>
+      transactionTypeService.createTransactionType(input)
+  }
+}

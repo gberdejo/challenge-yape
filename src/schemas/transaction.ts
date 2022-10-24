@@ -1,24 +1,10 @@
-import { TransactionInputType } from 'types/index';
-import { TransactionStatusModel } from '../models/transactionStatus';
-
-const mockData = {
-  transactionExternalId: '1',
-  accountExternalIdDebit: '123',
-  accountExternalIdCredit: '123',
-  tranferTypeId: 123,
-  value: 123,
-  transactionType: {
-    tranferTypeId: 123,
-    name: '123',
-  },
-  transactionStatus: {
-    name: '123',
-  },
-};
+import { TransactionInputType } from 'types/index'
+import * as TransactionService from '../services/transaction.service'
 
 export const typeDefs = `#graphql
     extend type Query {
         getTransactionById(id: String!): Transaction
+        getTransaction: [Transaction]
     }
 
     extend type Mutation {
@@ -32,38 +18,28 @@ export const typeDefs = `#graphql
         value: Int!
     }
 
-    type Response {
-        message: String
-    }
-
     type Transaction {
-        transactionExternalId: ID!
+        _id: ID!
+        transactionExternalId: Int!
         accountExternalIdDebit: ID!
         accountExternalIdCredit: ID!
         tranferTypeId: Int!
         value: Int!
         transactionType: TransactionType
         transactionStatus: TransactionStatus
+        createdAt: String
+        updatedAt: String
     }
-`;
+`
 
 export const resolvers = {
   Query: {
-    getTransactionById: (_: any, { id }: { id: string }) => {
-      const res = mockData;
-      res.transactionExternalId = id;
-      return res;
-    },
+    getTransactionById: (_: any, { id }: { id: string }) =>
+      TransactionService.getTransactionById(id),
+    getTransaction: () => TransactionService.getTransaction()
   },
   Mutation: {
-    async createTransaction(_: any, transactionInput: TransactionInputType) {
-      console.log(transactionInput);
-      const transactionStatus = new TransactionStatusModel({
-        name: '123',
-      });
-      console.log(transactionStatus);
-      await transactionStatus.save();
-      return mockData;
-    },
-  },
-};
+    createTransaction: (_: any, { input }: { input: TransactionInputType }) =>
+      TransactionService.createTransaction(input)
+  }
+}
