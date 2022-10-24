@@ -1,9 +1,31 @@
+import { TransactionInputType } from 'types/index';
+import { TransactionStatusModel } from '../models/transactionStatus';
+
+const mockData = {
+  transactionExternalId: '1',
+  accountExternalIdDebit: '123',
+  accountExternalIdCredit: '123',
+  tranferTypeId: 123,
+  value: 123,
+  transactionType: {
+    tranferTypeId: 123,
+    name: '123',
+  },
+  transactionStatus: {
+    name: '123',
+  },
+};
+
 export const typeDefs = `#graphql
     extend type Query {
         getTransactionById(id: String!): Transaction
     }
 
-    type TransactionInput {
+    extend type Mutation {
+        createTransaction(input: TransactionInput): Transaction
+    }
+
+    input TransactionInput {
         accountExternalIdDebit: ID!
         accountExternalIdCredit: ID!
         tranferTypeId: Int!
@@ -23,44 +45,25 @@ export const typeDefs = `#graphql
         transactionType: TransactionType
         transactionStatus: TransactionStatus
     }
-
-    type TransactionType {
-        tranferTypeId: Int!
-        name: String!
-    }
-
-    type TransactionStatus {
-        name: String!
-    }
-
 `;
 
 export const resolvers = {
   Query: {
     getTransactionById: (_: any, { id }: { id: string }) => {
-      return {
-        transactionExternalId: '123',
-        accountExternalIdDebit: '123',
-        accountExternalIdCredit: '123',
-        tranferTypeId: 123,
-        value: 123,
-        transactionType: {
-          tranferTypeId: 123,
-          name: '123',
-        },
-        transactionStatus: {
-          name: '123',
-        },
-      };
+      const res = mockData;
+      res.transactionExternalId = id;
+      return res;
     },
   },
-  //   Mutation: {
-  //     createTransaction: (_: any, { name }: TransactionType) => {
-  //       //   await createTransactionType({ name });
-  //       return {
-  //         message: 'Transaction created',
-  //         status: 'success',
-  //       };
-  //     },
-  //   },
+  Mutation: {
+    async createTransaction(_: any, transactionInput: TransactionInputType) {
+      console.log(transactionInput);
+      const transactionStatus = new TransactionStatusModel({
+        name: '123',
+      });
+      console.log(transactionStatus);
+      await transactionStatus.save();
+      return mockData;
+    },
+  },
 };

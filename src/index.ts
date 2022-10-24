@@ -22,10 +22,9 @@ app.use(
 
 app.listen(4000, async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27018/test');
+    await mongoose.connect('mongodb://localhost:27018/yape');
     console.log('Connected to MongoDB✈ and GraphQL🚀 is running on port 4000');
   } catch (error) {
     console.log(error);
-    process.exit(1);
   }
 });

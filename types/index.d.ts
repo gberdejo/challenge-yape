@@ -1,7 +1,14 @@
-export type SignUpRequest = Readonly<{
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  isCulqi: boolean;
+export type TransactionInputType = Readonly<{
+  accountExternalIdDebit?: string;
+  accountExternalIdCredit?: string;
+  tranferTypeId?: number;
+  value?: number;
+}>;
+
+export type TransactionStatusInputType = Readonly<{
+  name?: string;
+}>;
+
+export type TransactionTypeInputType = Readonly<{
+  name?: string;
 }>;

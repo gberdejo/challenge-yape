@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^9.0.4",
-    "@typegoose/auto-increment": "^1.8.0",
     "@typegoose/typegoose": "^9.12.1",
     "express": "^4.17.2",
     "express-graphql": "^0.12.0",
