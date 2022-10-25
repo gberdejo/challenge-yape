@@ -20,8 +20,20 @@ export const createTransaction = async (input: Transaction) => {
   return populate?.toObject()
 }
 
-export const getTransactionById = (tranferTypeId: string) =>
-  TransactionModel.findById(tranferTypeId).populate('transactionStatus').populate('transactionType')
+export const getTransactionById = (id: string) =>
+  TransactionModel.findById(id).populate('transactionStatus').populate('transactionType')
+
+export const getTransactionByTransactionExternalId = (transactionExternalId: number) =>
+  TransactionModel.findOne({ transactionExternalId })
+    .populate('transactionStatus')
+    .populate('transactionType')
 
 export const getTransaction = () =>
   TransactionModel.find().populate('transactionStatus').populate('transactionType')
+
+export const updateTransaction = async (
+  transactionExternalId: number,
+  transaction: Transaction
+) => {
+  await TransactionModel.findOneAndUpdate({ transactionExternalId }, transaction)
+}

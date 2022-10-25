@@ -1,7 +1,7 @@
 export const TRANSACTION_STATUS = {
   PENDING: 'pending',
-  SUCCESS: 'approved',
-  FAILED: 'rejected'
+  APPROVED: 'approved',
+  REJECTED: 'rejected'
 }
 
 export const TRANSACTION_TYPE = {

@@ -2,8 +2,10 @@ import express from 'express'
 import mongoose from 'mongoose'
 import { graphqlHTTP } from 'express-graphql'
 import { makeExecutableSchema } from '@graphql-tools/schema'
+import { Kafka } from 'kafkajs'
 
 import { typeDefs, resolvers } from './schemas'
+import { subscribe } from './utils/kafka'
 
 const app = express()
 
@@ -11,6 +13,13 @@ const schema = makeExecutableSchema({
   typeDefs,
   resolvers
 })
+
+export const kafka = new Kafka({
+  clientId: 'yape',
+  brokers: ['localhost:9092']
+})
+
+subscribe()
 
 app.use(
   '/graphql',
