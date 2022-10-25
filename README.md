@@ -1,7 +1,7 @@
 # challenge-yape
 
 ## 🛠 Skills
-Typescript, NodeJs, Graphql, MongoDB...
+Typescript, NodeJs, Graphql, KafkaJs, MongoDB...
 
 ## Crear 3 registros para transactionType
 * deposit
