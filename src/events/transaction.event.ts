@@ -5,17 +5,19 @@ import {
 import { emitter } from '../utils/kafka'
 import { getTransactionStatusByName } from '../services/transactionStatus.service'
 import { TRANSACTION_STATUS } from '../utils/constants'
+import { validationTransactionInputType } from '../../types/index'
 
 emitter.on('validationTransaction', async (data: any) => {
-  console.log('validationTransaction🚀')
+  console.log('validationTransaction🚀', data)
 
-  const transaction = (
-    await getTransactionByTransactionExternalId(data.transactionExternalId)
-  )?.toObject()
+  const { transactionExternalId } = data as validationTransactionInputType
 
-  console.log('transaction🚀', transaction)
+  const transaction = await getTransactionByTransactionExternalId(transactionExternalId)
 
-  const status = await getTransactionStatusByName(TRANSACTION_STATUS.APPROVED)
+  const validationTransaction =
+    transaction?.value! > 1000 ? TRANSACTION_STATUS.REJECTED : TRANSACTION_STATUS.APPROVED
+
+  const status = await getTransactionStatusByName(validationTransaction)
   console.log('status🚀', status)
 
   try {

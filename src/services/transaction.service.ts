@@ -17,16 +17,23 @@ export const createTransaction = async (input: Transaction) => {
   await transaction.save()
   const populate = await getTransactionById(transaction.id) // eslint-disable-line
 
-  return populate?.toObject()
+  return populate
 }
 
-export const getTransactionById = (id: string) =>
-  TransactionModel.findById(id).populate('transactionStatus').populate('transactionType')
-
-export const getTransactionByTransactionExternalId = (transactionExternalId: number) =>
-  TransactionModel.findOne({ transactionExternalId })
+export const getTransactionById = async (id: string) => {
+  const transaction = await TransactionModel.findById(id)
     .populate('transactionStatus')
     .populate('transactionType')
+  return transaction?.toObject()
+}
+
+export const getTransactionByTransactionExternalId = async (transactionExternalId: number) => {
+  const transaction = await TransactionModel.findOne({ transactionExternalId })
+    .populate('transactionStatus')
+    .populate('transactionType')
+
+  return transaction?.toObject()
+}
 
 export const getTransaction = () =>
   TransactionModel.find().populate('transactionStatus').populate('transactionType')

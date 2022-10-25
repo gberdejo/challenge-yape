@@ -1,14 +1,18 @@
 export type TransactionInputType = Readonly<{
-  accountExternalIdDebit?: string;
-  accountExternalIdCredit?: string;
-  tranferTypeId?: number;
-  value?: number;
-}>;
+  accountExternalIdDebit?: string
+  accountExternalIdCredit?: string
+  tranferTypeId?: number
+  value?: number
+}>
 
 export type TransactionStatusInputType = Readonly<{
-  name?: string;
-}>;
+  name?: string
+}>
 
 export type TransactionTypeInputType = Readonly<{
-  name?: string;
-}>;
+  name?: string
+}>
+
+export type validationTransactionInputType = Readonly<{
+  transactionExternalId: number
+}>
